@@ -44,7 +44,12 @@ def main(vec):
         # if rho != 0:
             # X,Y,Z,Mx,My,Mz = adh(M,vec[1],q,vec[11],vec[12],vec[13],vec[9],vec[10],vec[0])
         # else:
-        X,Y,Z,Mx,My,Mz = 0,0,0,0,0,0    
+        X,Y,Z,Mx,My,Mz = 0,0,0,0,0,0
+        X,Y,Z,Mx,My,Mz = 0,0,0,0,0,0
+        # 
+        # 
+        # 
+        #
         Pr = Px(p,vec[0])
         Fssk = np.array([[Pr - X + 4 * Pgz02 * cos(delta02) + 4 * Pgz01 * cos(delta01)],[Y + 2 * Pgz02 * sin(delta02) + 2 * Pgz01 * sin(delta01)],[Z - 2 * Pgz02*sin(delta02) - 2 * Pgz01*sin(delta01)]])
         Assk_tsk = ssk_tsk(vec[9], vec[10])
