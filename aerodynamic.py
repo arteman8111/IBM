@@ -36,7 +36,19 @@ def interpol2d(alpha, M, alpha_arr, M_arr, alphaM_arr):
     return coeff_alpha_1 + (coeff_alpha_2 - coeff_alpha_1) / (M2 - M1) * (M - M1)
 
 
-def Cx1(M, alpha):
+def Cz(M, alpha):
+    return -1.3 * 10e-5
+
+
+def mx(M, alpha):
+    return 1.7 * 10e-6
+
+
+def my(M, alpha):
+    return 2.06 * 10e-6
+
+
+def Cx(M, alpha):
     Cx = np.array(
         [
             [0, 0, 0, 0],
@@ -50,7 +62,7 @@ def Cx1(M, alpha):
     return interpol2d(alpha, M, alpha_arr, M_arr, Cx)
 
 
-def Cy1(M, alpha):
+def Cy(M, alpha):
     Cy = np.array(
         [
             [0, 0, 0, 0],
@@ -64,7 +76,7 @@ def Cy1(M, alpha):
     return interpol2d(alpha, M, alpha_arr, M_arr, Cy)
 
 
-def mz1(M, alpha):
+def mz(M, alpha):
     mz = np.array(
         [
             [0, 0, 0, 0],
@@ -78,7 +90,7 @@ def mz1(M, alpha):
     return interpol2d(alpha, M, alpha_arr, M_arr, mz)
 
 
-def adh(M,v,q,wx,wy,wz,alpha,beta, t):
+def adh(M, alpha, q, t):
     if t <= tk1 + tk2:
         Sm = np.pi * dm1**2 / 4
     else:
@@ -89,65 +101,19 @@ def adh(M,v,q,wx,wy,wz,alpha,beta, t):
     else:
         L = Lgh
 
-    # if t <= tk1 + tk2:
-    #     X = 1e-3*Cx(M, alpha) * q * Sm
-    #     Y = 1e-3*Cy(M, alpha) * q * Sm
-    #     Z = 0
-    #     Mx = 0
-    #     My = 1e-5*mz(M, alpha) * q * Sm * L
-    #     Mz = 1e-5*mz(M, alpha) * q * Sm * L
-    # else:
-    #     X = 1e-3*Cx(M, alpha) * q * Sm
-    #     Y = 1e-3*Cy(M, alpha) * q * Sm
-    #     Z = 0
-    #     Mx = 0
-    #     My = 1e-5*mz(M, alpha) * q * Sm * L
-    #     Mz = 1e-5*mz(M, alpha) * q * Sm * L
-    # AERODYNAMIC
-    def Cx(M, alfa_):
-        return 1 / (73.211 / exp(M) - 47.483 / M + 16.878)
-
-    def Cy_alfa(M, alfa_):
-        Ds = 11.554 / exp(M) - 2.5191e-3 * M * M - 5.024 / M + 52.836e-3 * M + 4.112
-        if Ds >= 0:
-            return sqrt(Ds)
-        else:
-            return 1.039
-
-    def Cz_beta(M, alfa_):
-        return -Cy_alfa(M, alfa_)
-
-    def mx_wx(M, alfa_):
-        return -0.005
-
-    def mz_wz(M, alfa_):
-        return (146.79e-6*M*M - 158.98e-3/M - 7.6396e-3*M - 68.195e-3);
-
-    def my_wy(M, alfa_):
-        return mz_wz(M, alfa_)
-    
-    def mz_alfa(M, alfa_):
-        return (-766.79e-3/exp(M) + 438.74e-3/M + 5.8822e-3*M - 158.34e-3);
-
-    def my_beta(M, beta):
-        return mz_alfa(M, beta)
-
-    cx = Cx(M, alpha)
-    cy = Cy_alfa(M, alpha)
-    cz = Cz_beta(M, alpha)
-    # Силы
-    X = cx*q*Sm
-    Y = cy*q*Sm
-    Z = cz*q*Sm
-    
-    # АД коэффы моментов
-    mx = mx_wx(M, alpha)*wx*L/v 
-    my = my_wy(M, alpha)*wy*L/v + my_beta(M,alpha)
-    mz = mz_wz(M, alpha)*wz*L/v + mz_alfa(M, alpha)
-    
-    # Моменты
-    Mx = mx*q*Sm*L
-    My = my*q*Sm*L
-    Mz = mz*q*Sm*L
+    if t <= tk1 + tk2:
+        X = 1e-3*Cx(M, alpha) * q * Sm
+        Y = 1e-3*Cy(M, alpha) * q * Sm
+        Z = 0
+        Mx = 0
+        My = 1e-5*mz(M, alpha) * q * Sm * L
+        Mz = 1e-5*mz(M, alpha) * q * Sm * L
+    else:
+        X = 1e-3*Cx(M, alpha) * q * Sm
+        Y = 1e-3*Cy(M, alpha) * q * Sm
+        Z = 0
+        Mx = 0
+        My = 1e-5*mz(M, alpha) * q * Sm * L
+        Mz = 1e-5*mz(M, alpha) * q * Sm * L
 
     return (X, Y, Z, Mx, My, Mz)
