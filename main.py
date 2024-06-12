@@ -13,10 +13,10 @@ XLSX = [[t],[V],[thetc],[psic],[fi],[ly],[thet],[psi],[gama],[alpha],[betta],[wx
 XLSX_DOP = [[0],[P01],[0],[0],[0],[0],[0],[0],[0],[0],[0],[rhoRG],[lyRG],[muRG],[nuRG]]
 
 def main(vec):
-    Pdop1 = 320000
-    # Pdop1 = 0
-    Pdop2 = 49200
-    # Pdop2 = 0
+    # Pdop1 = 320000
+    Pdop1 = 0
+    # Pdop2 = 49200
+    Pdop2 = 0
     dt = 1e-1
     flag1, flag2 = True, True
     Pgz01 = Pdop1 / 4 # Тяга газодинамических рулей 1 ступени
@@ -77,7 +77,7 @@ def main(vec):
 
         if round(vec[0],5) * 100 % 1000 == 0.00000 or vec[18] <= 1e-4 and vec[18] > 0:
             vec_dop = [vec[0],Pr,X,Y,Z,Mx,My,Mz,Fxk,Fyk,Fzk,vec[25],vec[26],vec[27],vec[28]]
-            print('t=',vec[0],'x=',vec[17]/1000,'z=',vec[19]/1000, 'Lmax=',sqrt((vec[17]/1000)**2+(vec[19]/1000)**2), 'V=', vec[1])
+            print('t=',vec[0],'x=',vec[17]/1000,'z=',vec[19]/1000, 'V=', vec[1], 'alfa=', vec[9]*180/pi)
             for c in range(25):
                 XLSX[c].append(vec[c])
             for k in range(len(vec_dop)):

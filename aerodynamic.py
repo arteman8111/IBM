@@ -101,19 +101,11 @@ def adh(M, alpha, q, t):
     else:
         L = Lgh
 
-    if t <= tk1 + tk2:
-        X = 1e-3*Cx(M, alpha) * q * Sm
-        Y = 1e-3*Cy(M, alpha) * q * Sm
-        Z = 0
-        Mx = 0
-        My = 1e-5*mz(M, alpha) * q * Sm * L
-        Mz = 1e-5*mz(M, alpha) * q * Sm * L
-    else:
-        X = 1e-3*Cx(M, alpha) * q * Sm
-        Y = 1e-3*Cy(M, alpha) * q * Sm
-        Z = 0
-        Mx = 0
-        My = 1e-5*mz(M, alpha) * q * Sm * L
-        Mz = 1e-5*mz(M, alpha) * q * Sm * L
+    X = 1e-3*Cx(M, alpha) * q * Sm
+    Y = 1e-3*Cy(M, alpha) * q * Sm
+    Z = 1e-3*Cy(M, alpha) * q * Sm
+    Mx = 0
+    My = 1e-5*mz(M, alpha) * q * Sm * L
+    Mz = 1e-5*mz(M, alpha) * q * Sm * L
 
     return (X, Y, Z, Mx, My, Mz)
