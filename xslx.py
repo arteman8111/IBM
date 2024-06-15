@@ -97,4 +97,4 @@ def xlsxwritter(data,data1):
         i += 1
         n += 1
 
-    wb.save('C:/Users/artem/Desktop/kp_biap/slavik/titan.xls')
+    wb.save('C:/Users/artem/Desktop/kp_biap/katuha.xls')
